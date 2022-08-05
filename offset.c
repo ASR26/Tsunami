@@ -1,5 +1,9 @@
 #include <stdio.h>
 #include <windows.h>
+
+/*
+ * Esta función da el offset de una función en su librería
+*/
 typedef VOID (*MYPROC)(LPTSTR);
 
 int main (int argc, char **argv) {
