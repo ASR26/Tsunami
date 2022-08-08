@@ -13,7 +13,7 @@ int main (int argc, char **argv) {
     HINSTANCE libreria;
     MYPROC procadd;
 
-    printf ("Busca offsets xDD. Introduce como primer argumento el nombre de la DLL,\n");
+    printf ("Busca offsets. Introduce como primer argumento el nombre de la DLL,\n");
     printf ("y como segundo argumento la función dentro de esa DLL\n");
     printf ("Por ejemplo %s msvcrt.dll system\n\n", argv[0]);
 
