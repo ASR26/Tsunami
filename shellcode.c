@@ -6,7 +6,7 @@
  * Podemos ver dos partes en el código, en la primera parte estamos cargando la librería "msvcrt.dll" y en la segunda ejecutamos "calc.exe"
  * 
  * La segunda dirección de memoria se consigue usando el offset.c, al que le daremos como parametros la librería y la función que buscamos
- * La primera dirección es donde se localiza LoadLibrary en Windows XP SP3, se puede encontrar en internet
+ * La primera dirección es donde se localiza LoadLibrary en Windows XP SP3, se puede encontrar en internet o ejecutando offset.exe kernel32.dll LoadLibraryA
  * Al ejecutar el offset.exe (lo conseguimos haciendo el comando "cl" al offset.c) y darle los parametros "msvcrt.dll" system conseguiremos la segunda dirección de memoria, que es el offset necesario para ejecutar programas con la función system
  * Básicamente la primera parte carga la librería msvcrt.dll y la segunda ejecuta la calculadora, estos dos archivos están escritos en hexadecimal en las lineas de mov byte y el sub esp se utiliza para darles hueco a los bytes necesarios para escribirlo
  * el xor se utiliza en este caso para crear un valor 0 que se usará como fin de linea
