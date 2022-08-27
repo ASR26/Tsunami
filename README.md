@@ -33,3 +33,7 @@ offset.exe msvcrt.dll system
 El comando cl nos dará el archivo .exe que será el que usaremos para los siguientes comandos, ambos nos darán como resultado las siguientes direcciones de memoria:<br>
 `0x7c801d7b`<br>
 `0x77c293c7`<br>
+
+Estás direcciones son las correspondientes a las funciones (tercer argumento de los comandos) en las librerías (segundo argumento en los comandos). Necesitaremos esta dirección para ejecutar las funciones desde lenguaje ensamblador.
+
+Ahora haremos el shellcode con las direcciones que hemos conseguido
