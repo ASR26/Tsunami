@@ -40,4 +40,4 @@ Estás direcciones son las correspondientes a las funciones (tercer argumento de
 Ahora haremos el shellcode con las direcciones que hemos conseguido, en <a href="https://wiki.elhacker.net/bugs-y-exploits/overflows-y-shellcodes/exploits-y-stack-overflows-en-windows">esta página</a> podremos encontrar un ejemplo de shellcode, sin embargo este ejecutará la consola, mientras que nuestro proyecto busca ejecutar la calculadora.
 Veremos que la única diferencia se encuentra en las direcciones de memoria y en las líneas con este formato: `mov byte ptr [ebp-08h],63h`
 
-Los 2 números al final de cada línea son cada una las letras (en <a href="https://ascii.cl/es/">hexadecimal</a>) que conformarán el comando a ejecutar, en nuestro caso `calc.exe` y `msvcrt.dll` (en el caso del ejemplo cmd.exe).
+Los 2 números al final de cada línea son cada una las letras (en <a href="https://ascii.cl/es/">hexadecimal</a>) que conformarán el comando a ejecutar, en nuestro caso  `msvcrt.dll` y `calc.exe` (en el caso del ejemplo cmd.exe).
