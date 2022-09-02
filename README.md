@@ -76,4 +76,5 @@ Esto nos devolvera una dirección pero tendremos que introducirla en otro string
 ```
 
 Comprobaremos que se introduzca 1 argumento a la hora de ejecutar el exploit. Copiaremos el argumento que hayamos introducido en el buffer grande, para llenar el buffer vulnerable de la aplicación, luego añadiremos la dirección de memoria que acabamos de conseguir y tras esto el shellcode.
-Tras esto ejecutaremos el programa vulnerable dandole como argumento el buffer malicioso que hemos creado y esto abrirá la calculadora.
+
+Tras esto ejecutaremos el programa vulnerable dandole como argumento el buffer malicioso que hemos creado y se abrirá la calculadora.
